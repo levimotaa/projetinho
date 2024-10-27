@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/levimotaa/projetinho/static/css/main.7179461d.css",
-    "main.js": "/levimotaa/projetinho/static/js/main.2a9b1fa3.js",
-    "static/media/gbarbosa.png": "/levimotaa/projetinho/static/media/gbarbosa.f9853332764d5b7bf4c4.png",
-    "static/media/alcatra.png": "/levimotaa/projetinho/static/media/alcatra.81349cfef4a3eab7d4d7.png",
-    "static/media/picanha.png": "/levimotaa/projetinho/static/media/picanha.3ac1ae22160e77f7a687.png",
-    "static/media/paracetamol.png": "/levimotaa/projetinho/static/media/paracetamol.09b13fe4287566cfb0c0.png",
-    "static/media/maca.png": "/levimotaa/projetinho/static/media/maca.6112b571ac2cebb56eb5.png",
-    "static/media/loratamed.png": "/levimotaa/projetinho/static/media/loratamed.81e28e2f722affb08002.png",
-    "static/media/banana.png": "/levimotaa/projetinho/static/media/banana.e3880a3a3aea598db857.png",
-    "static/media/google-logo.png": "/levimotaa/projetinho/static/media/google-logo.264682585e33eac2bcb2.png",
-    "index.html": "/levimotaa/projetinho/index.html",
-    "main.7179461d.css.map": "/levimotaa/projetinho/static/css/main.7179461d.css.map",
-    "main.2a9b1fa3.js.map": "/levimotaa/projetinho/static/js/main.2a9b1fa3.js.map"
+    "main.css": "/projetinho/static/css/main.7179461d.css",
+    "main.js": "/projetinho/static/js/main.c5871199.js",
+    "static/media/gbarbosa.png": "/projetinho/static/media/gbarbosa.f9853332764d5b7bf4c4.png",
+    "static/media/alcatra.png": "/projetinho/static/media/alcatra.81349cfef4a3eab7d4d7.png",
+    "static/media/picanha.png": "/projetinho/static/media/picanha.3ac1ae22160e77f7a687.png",
+    "static/media/paracetamol.png": "/projetinho/static/media/paracetamol.09b13fe4287566cfb0c0.png",
+    "static/media/maca.png": "/projetinho/static/media/maca.6112b571ac2cebb56eb5.png",
+    "static/media/loratamed.png": "/projetinho/static/media/loratamed.81e28e2f722affb08002.png",
+    "static/media/banana.png": "/projetinho/static/media/banana.e3880a3a3aea598db857.png",
+    "static/media/google-logo.png": "/projetinho/static/media/google-logo.264682585e33eac2bcb2.png",
+    "index.html": "/projetinho/index.html",
+    "main.7179461d.css.map": "/projetinho/static/css/main.7179461d.css.map",
+    "main.c5871199.js.map": "/projetinho/static/js/main.c5871199.js.map"
   },
   "entrypoints": [
     "static/css/main.7179461d.css",
-    "static/js/main.2a9b1fa3.js"
+    "static/js/main.c5871199.js"
   ]
 }
