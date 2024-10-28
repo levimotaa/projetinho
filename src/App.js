@@ -12,17 +12,14 @@ const App = () => {
     const [isRegistering, setIsRegistering] = useState(false);
     const [isFuncionario, setIsFuncionario] = useState(false);
     const [isClientLoggedIn, setIsClientLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(true); // Controle temporário para admin
+    const [isAdmin, setIsAdmin] = useState(true);
 
     const handleRegisterClick = () => setIsRegistering(true);
     const handleSuccessfulRegister = () => setIsRegistering(false);
     const toggleLoginType = (isFuncionarioLogin) => setIsFuncionario(isFuncionarioLogin);
     const handleClientLoginSuccess = () => setIsClientLoggedIn(true);
 
-    // Rota protegida para o cadastro de funcionários
-    const PrivateRoute = ({ children }) => {
-        return isAdmin ? children : <Navigate to="/" />;
-    };
+    if (isClientLoggedIn) return <ClientHome />;
 
     return (
         <Router>
@@ -31,9 +28,7 @@ const App = () => {
                     <Route 
                         path="/" 
                         element={
-                            isClientLoggedIn ? (
-                                <Navigate to="/client-home" />
-                            ) : isRegistering ? (
+                            isRegistering ? (
                                 <RegisterForm 
                                     onBackToLogin={() => setIsRegistering(false)}
                                     onSuccessfulRegister={handleSuccessfulRegister} 
@@ -56,14 +51,7 @@ const App = () => {
                     />
                     <Route path="/client-home" element={<ClientHome />} />
                     <Route path="/employee-home" element={<EmployeeHome />} />
-                    <Route 
-                        path="/register-employee" 
-                        element={
-                            <PrivateRoute>
-                                <RegisterEmployee />
-                            </PrivateRoute>
-                        } 
-                    />
+                    <Route path="/register-employee" element={<RegisterEmployee />} />
                 </Routes>
             </div>
         </Router>
