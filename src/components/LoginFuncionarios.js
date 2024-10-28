@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash, FaUser, FaBriefcase } from 'react-icons/fa';
 import gbarbosaLogo from '../assets/gbarbosa.png';
 
@@ -7,15 +8,25 @@ const LoginFuncionarios = ({ onBack, toggleLoginType, loginType }) => {
   const [credencial, setCredencial] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const handleLogin = () => {
-    if (credencial === 'funcionario123' && password === '123456') {
+    const employees = JSON.parse(localStorage.getItem('employees')) || [];
+    const employee = employees.find(emp => emp.id === credencial && emp.password === password);
+
+    if (employee) {
       setErrorMessage('');
+      setSuccessMessage('Login efetuado com sucesso!');
+      setTimeout(() => {
+        navigate('/employee-home');
+      }, 2500);
     } else {
+      setSuccessMessage('');
       setErrorMessage('Credenciais inválidas. Verifique sua credencial e senha.');
     }
   };
@@ -57,6 +68,7 @@ const LoginFuncionarios = ({ onBack, toggleLoginType, loginType }) => {
           </div>
         </div>
         {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
+        {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
         <div className="flex items-center justify-between">
           <button
             className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none"
