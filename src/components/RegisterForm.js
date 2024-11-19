@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaArrowLeft, FaEye, FaCalendarAlt } from 'react-icons/fa';
 import gbarbosaLogo from '../assets/gbarbosa.png';
+import axios from 'axios';
 
 const RegisterForm = ({ onBackToLogin, onSuccessfulRegister }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,8 +11,7 @@ const RegisterForm = ({ onBackToLogin, onSuccessfulRegister }) => {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
-    birthDate: '',
+
     termsAccepted: false,
   });
   const [error, setError] = useState('');
@@ -38,11 +38,11 @@ const RegisterForm = ({ onBackToLogin, onSuccessfulRegister }) => {
     return age > 18 || (age === 18 && m >= 0 && today.getDate() >= birth.getDate());
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const { fullName, email, password, confirmPassword, phone, birthDate, termsAccepted } = formData;
 
-    if (!fullName || !email || !password || !confirmPassword || !phone || !birthDate || !termsAccepted) {
+    if (!fullName || !email || !password || !confirmPassword || !termsAccepted) {
       setError('Por favor, preencha todos os campos e aceite os Termos e Condições.');
       return;
     }
@@ -52,19 +52,21 @@ const RegisterForm = ({ onBackToLogin, onSuccessfulRegister }) => {
       return;
     }
 
-    if (!isValidPhone(phone)) {
-      setError('O número de telefone deve conter apenas dígitos e ter entre 10 e 11 caracteres.');
-      return;
-    }
-
-    if (!isOver18(birthDate)) {
-      setError('Você precisa ter mais de 18 anos para se cadastrar.');
-      return;
-    }
+  
 
     if (password !== confirmPassword) {
       setError('As senhas não coincidem.');
       return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5062/Auth/Cadastrar', {
+        email: email,
+        senha: password
+      });
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('There was an error!', error);
     }
 
     // Recupera os usuários existentes ou inicializa um array vazio
@@ -131,22 +133,8 @@ const RegisterForm = ({ onBackToLogin, onSuccessfulRegister }) => {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-white mb-1 font-bold">Número de Telefone</label>
-            <input 
-              type="tel" 
-              name="phone" 
-              placeholder="Digite seu telefone" 
-              onChange={handleChange} 
-              value={formData.phone} 
-              className="w-full p-2 rounded border border-gray-300" 
-            />
-          </div>
-          <div className="mb-4 relative">
-            <label className="block text-white mb-1 font-bold">Data de Nascimento</label>
-            <input type="date" name="birthDate" onChange={handleChange} value={formData.birthDate} className="w-full p-2 rounded border border-gray-300" />
-            <FaCalendarAlt className="absolute right-3 top-9 text-gray-500" />
-          </div>
+        
+          
         </form>
       </div>
 

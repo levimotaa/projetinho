@@ -7,6 +7,7 @@ import RegisterForm from './components/RegisterForm';
 import EmployeeHome from './components/EmployeeHome';
 import RegisterEmployee from './components/RegisterEmployee';
 import ClientHome from './components/ClientHome';
+import ManageProducts from './components/ManageProducts';
 
 const App = () => {
     const [isRegistering, setIsRegistering] = useState(false);
@@ -18,20 +19,23 @@ const App = () => {
     const handleSuccessfulRegister = () => setIsRegistering(false);
     const toggleLoginType = (isFuncionarioLogin) => setIsFuncionario(isFuncionarioLogin);
     const handleClientLoginSuccess = () => setIsClientLoggedIn(true);
+    const handleClientLogout = () => setIsClientLoggedIn(false); // Adiciona a função de logout do cliente
 
-    if (isClientLoggedIn) return <ClientHome />;
+    const PrivateRoute = ({ children }) => {
+        return isAdmin ? children : <Navigate to="/" />;
+    };
 
     return (
         <Router>
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
                 <Routes>
-                    <Route 
-                        path="/" 
+                    <Route
+                        path="/"
                         element={
                             isRegistering ? (
-                                <RegisterForm 
+                                <RegisterForm
                                     onBackToLogin={() => setIsRegistering(false)}
-                                    onSuccessfulRegister={handleSuccessfulRegister} 
+                                    onSuccessfulRegister={handleSuccessfulRegister}
                                 />
                             ) : isFuncionario ? (
                                 <LoginFuncionarios
@@ -47,11 +51,29 @@ const App = () => {
                                     onLoginSuccess={handleClientLoginSuccess}
                                 />
                             )
-                        } 
+                        }
                     />
-                    <Route path="/client-home" element={<ClientHome />} />
+                    <Route
+                        path="/client-home"
+                        element={<ClientHome onLogout={handleClientLogout} />}
+                    />
                     <Route path="/employee-home" element={<EmployeeHome />} />
-                    <Route path="/register-employee" element={<RegisterEmployee />} />
+                    <Route
+                        path="/register-employee"
+                        element={
+                            <PrivateRoute>
+                                <RegisterEmployee />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/manage-products"
+                        element={
+                            <PrivateRoute>
+                                <ManageProducts />
+                            </PrivateRoute>
+                        }
+                    />
                 </Routes>
             </div>
         </Router>

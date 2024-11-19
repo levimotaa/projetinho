@@ -1,15 +1,17 @@
 // LoginForm.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash, FaUser, FaBriefcase } from 'react-icons/fa';
 import googleLogo from '../assets/google-logo.png';
 import gbarbosaLogo from '../assets/gbarbosa.png';
 
-const LoginForm = ({ onRegisterClick, toggleLoginType, loginType, onLoginSuccess }) => {
+const LoginForm = ({ onRegisterClick, toggleLoginType, loginType }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState(''); // Novo estado para a mensagem de sucesso
+    const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate(); // Importa o hook para navegação
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -28,7 +30,7 @@ const LoginForm = ({ onRegisterClick, toggleLoginType, loginType, onLoginSuccess
             // Exibe a mensagem por 2.5 segundos antes de redirecionar
             setTimeout(() => {
                 setSuccessMessage('');
-                onLoginSuccess();
+                navigate('/client-home'); // Redireciona para ClientHome após login bem-sucedido
             }, 2500);
         } else {
             setErrorMessage('Credenciais inválidas para Cliente.');
@@ -39,7 +41,11 @@ const LoginForm = ({ onRegisterClick, toggleLoginType, loginType, onLoginSuccess
     return (
         <div className="bg-white rounded-lg shadow-lg p-6 w-80">
             <div className="bg-red-600 rounded-lg p-6 flex justify-center mb-6">
-                <img src={gbarbosaLogo} alt="Logo da empresa" className="rounded-full border-6 border-white w-32 h-32" />
+                <img
+                    src={gbarbosaLogo}
+                    alt="Logo da empresa"
+                    className="rounded-full border-6 border-white w-32 h-32"
+                />
             </div>
 
             <form onSubmit={(e) => e.preventDefault()}>
@@ -57,13 +63,16 @@ const LoginForm = ({ onRegisterClick, toggleLoginType, loginType, onLoginSuccess
                     <label className="block text-gray-700">Senha</label>
                     <div className="relative">
                         <input
-                            type={showPassword ? "text" : "password"}
+                            type={showPassword ? 'text' : 'password'}
                             placeholder="123456"
                             className="w-full border-b-2 border-gray-300 focus:outline-none focus:border-gray-500 py-2"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <span onClick={togglePasswordVisibility} className="absolute right-2 top-2 text-gray-500 cursor-pointer">
+                        <span
+                            onClick={togglePasswordVisibility}
+                            className="absolute right-2 top-2 text-gray-500 cursor-pointer"
+                        >
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </span>
                     </div>
@@ -101,14 +110,18 @@ const LoginForm = ({ onRegisterClick, toggleLoginType, loginType, onLoginSuccess
 
             <div className="flex justify-center mt-6 border border-gray-300 bg-gray-100 bg-opacity-50 rounded-lg p-1">
                 <button
-                    className={`py-2 px-4 flex items-center w-1/2 justify-center ${loginType === 'cliente' ? 'bg-red-600 text-white' : 'text-gray-700'}`}
+                    className={`py-2 px-4 flex items-center w-1/2 justify-center ${
+                        loginType === 'cliente' ? 'bg-red-600 text-white' : 'text-gray-700'
+                    }`}
                     onClick={() => toggleLoginType(false)}
                 >
                     <FaUser className="mr-2" />
                     Cliente
                 </button>
                 <button
-                    className={`py-2 px-4 flex items-center w-1/2 justify-center ${loginType === 'funcionario' ? 'bg-yellow-500 text-white' : 'text-gray-700'}`}
+                    className={`py-2 px-4 flex items-center w-1/2 justify-center ${
+                        loginType === 'funcionario' ? 'bg-yellow-500 text-white' : 'text-gray-700'
+                    }`}
                     onClick={() => toggleLoginType(true)}
                 >
                     <FaBriefcase className="mr-2" />
